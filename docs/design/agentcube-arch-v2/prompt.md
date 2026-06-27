@@ -81,10 +81,10 @@ status: Draft        # Draft | In-Review | Accepted
 ## Motivation                # 为什么要做 v2，解决 v1 的什么痛点
 ## Goals
 ## Non-Goals                 # 必写，划定边界防止发散
-## Use Cases
-## Overall Architecture      # 含核心 Concepts + 架构图
+## Use Cases                 # 必写，要按照用户故事写，避免空洞
+## Overall Architecture      # 含核心 Concepts + 架构图，架构图需要需要呈现所有组件及其相对关系。
 ## API Design                # CRD / HTTP API 契约
-## Component Design          # Router / Workload Manager / PicoD 等分组件展开
+## Component Design          # Router / Workload Manager / PicoD 等分组件展开，明确写出每个组件的职责边界、交互方式、数据流向、状态机、生命周期等。
 ## Lifecycle & State Machine # 用 mermaid stateDiagram
 ## Sequence / Workflow       # 用 mermaid sequenceDiagram
 ## Alternatives Considered   # 备选方案 + 取舍对比表
@@ -95,6 +95,7 @@ status: Draft        # Draft | In-Review | Accepted
 
 - **图优先用 mermaid**（`stateDiagram-v2` / `sequenceDiagram`），因为文本可 diff、可版本化；
   非要用图片时放到 `./images/` 并在文中引用。
+- 用到图片时可以使用drawio绘制图片，并导出png/svg，放到 `./images/`，在文中引用。
 
 ## 5. 迭代工作规则
 
@@ -139,3 +140,11 @@ status: Draft        # Draft | In-Review | Accepted
 本轮先聚焦 **Overall Architecture 高层方案**：
 给出 2~3 个候选架构方向 + 取舍对比，**先不要写实现细节代码**。
 我选定方向后，我们再逐层下钻。
+
+### 第二轮迭代启动指令
+
+上一轮意见和指示：
+- Use case 没有写出用户故事，不合格，更新了Prompt，需要重新写。
+- 三个方向中，选择 资源池预占 Pod + 自研二级放置 方向
+- 沙箱不再Pod化，资源池内运行沙箱时会超卖的，会确保当资源不足时，多个沙箱仍然可以在同一个Node上运行，只是由于资源不足，部分水箱会执行慢，资源供及速度不足，但不会导致沙箱被杀死或OOM。
+
